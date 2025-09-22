@@ -120,7 +120,8 @@ const PlannerAgent: React.FC<PlannerAgentProps> = ({
         <h3 className="text-2xl font-bold text-gray-800">Game Ideas</h3>
         {isLoading && (
           <p className="text-sm text-gray-600">
-            Generating ideas based on your selected concept...
+            Generating ideas based on your selected concept... this may take up
+            to 30 seconds...
           </p>
         )}
       </div>

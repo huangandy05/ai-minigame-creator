@@ -24,15 +24,15 @@ interface RequirementsAgentProps {
   currentQuestionIndex?: number;
 }
 
-const RequirementsAgent: React.FC<RequirementsAgentProps> = ({ 
+const RequirementsAgent: React.FC<RequirementsAgentProps> = ({
   selectedConcept,
   selectedGameIdea,
   questionAnswers,
   onAnswerUpdate,
   onQuestionsGenerated,
-  onNext, 
-  canProceed, 
-  currentQuestionIndex = 0 
+  onNext,
+  canProceed,
+  currentQuestionIndex = 0,
 }) => {
   const [isGeneratingQuestions, setIsGeneratingQuestions] = useState(false);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -46,10 +46,10 @@ const RequirementsAgent: React.FC<RequirementsAgentProps> = ({
     setError(null);
 
     try {
-      const response = await fetch('/api/generate-game-requirements', {
-        method: 'POST',
+      const response = await fetch("/api/generate-game-requirements", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           selectedConcept,
@@ -64,7 +64,7 @@ const RequirementsAgent: React.FC<RequirementsAgentProps> = ({
 
       const data = await response.json();
       console.log("Requirements API Response:", data);
-      
+
       if (data.questions && Array.isArray(data.questions)) {
         setQuestions(data.questions);
         onQuestionsGenerated(data.questions);
@@ -73,8 +73,8 @@ const RequirementsAgent: React.FC<RequirementsAgentProps> = ({
         throw new Error("Invalid response format");
       }
     } catch (err) {
-      console.error('Error generating questions:', err);
-      setError(err instanceof Error ? err.message : 'Unknown error occurred');
+      console.error("Error generating questions:", err);
+      setError(err instanceof Error ? err.message : "Unknown error occurred");
     } finally {
       setIsGeneratingQuestions(false);
     }
@@ -101,7 +101,8 @@ const RequirementsAgent: React.FC<RequirementsAgentProps> = ({
             Generating Questions...
           </h3>
           <p className="text-sm text-gray-600 mt-2">
-            Creating personalized questions for your game concept...
+            Creating personalized questions for your game concept... again, this
+            may take a moment...
           </p>
         </div>
         <QuestionSkeleton />
@@ -118,19 +119,26 @@ const RequirementsAgent: React.FC<RequirementsAgentProps> = ({
             Ready to Generate Requirements
           </h3>
           <p className="text-gray-600 mb-6">
-            I'll ask you 5 questions to understand the specific requirements for your game.
+            I'll ask you 5 questions to understand the specific requirements for
+            your game.
           </p>
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
               <div className="flex items-center gap-2 text-red-700">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
                   <path
                     fillRule="evenodd"
                     d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="font-medium">Failed to generate questions</span>
+                <span className="font-medium">
+                  Failed to generate questions
+                </span>
               </div>
               <p className="text-sm text-red-600 mt-1">{error}</p>
             </div>
@@ -138,7 +146,9 @@ const RequirementsAgent: React.FC<RequirementsAgentProps> = ({
           <button
             type="button"
             onClick={generateQuestions}
-            disabled={!selectedConcept || !selectedGameIdea || isGeneratingQuestions}
+            disabled={
+              !selectedConcept || !selectedGameIdea || isGeneratingQuestions
+            }
             className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
           >
             Generate Questions
@@ -207,7 +217,6 @@ const RequirementsAgent: React.FC<RequirementsAgentProps> = ({
           ))}
         </div>
       </div>
-
     </div>
   );
 };
