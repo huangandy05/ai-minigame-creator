@@ -10,6 +10,7 @@ import RequirementsAgent from "./components/RequirementsAgent";
 import ProductManagerAgent from "./components/ProductManagerAgent";
 import CodingAgent from "./components/CodingAgent";
 import { AGENT_CONFIGS, GameData, GameIdea, Question } from "./types";
+import Sidebar from "../components/Sidebar";
 
 function CreatePageContent() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -117,65 +118,62 @@ function CreatePageContent() {
   const currentAgent = AGENT_CONFIGS[currentStep - 1];
 
   return (
-    <div className="max-w-5xl mx-auto p-8 bg-blue-100 min-h-screen flex flex-col justify-between">
-      <div className="flex-1">
-        <AgentStep
-          stepNumber={currentStep}
-          title={currentAgent.title}
-          description={currentAgent.description}
-          onContinue={getStepHandler()}
-          canContinue={canContinue()}
-          buttonText={getButtonText()}
-        >
-          {currentStep === 1 && (
-            <IdeasAgent
-              selectedConcept={gameData.selectedConcept}
-              onConceptSelect={handleConceptSelect}
-            />
-          )}
-          {currentStep === 2 && (
-            <PlannerAgent
-              selectedConcept={gameData.selectedConcept}
-              selectedGameIdea={gameData.selectedGameIdea}
-              onGameIdeaSelect={handleGameIdeaSelect}
-            />
-          )}
-          {currentStep === 3 && (
-            <RequirementsAgent
-              selectedConcept={gameData.selectedConcept}
-              selectedGameIdea={gameData.selectedGameIdea}
-              questionAnswers={gameData.questionAnswers}
-              onAnswerUpdate={handleAnswerUpdate}
-              onQuestionsGenerated={handleQuestionsGenerated}
-              onNext={handleRequirementsNext}
-              canProceed={canContinue()}
-              currentQuestionIndex={requirementsQuestionIndex}
-            />
-          )}
-          {currentStep === 4 && (
-            <ProductManagerAgent
-              gameData={gameData}
-              onComplete={handlePRDComplete}
-            />
-          )}
-          {currentStep === 5 && (
-            <CodingAgent gameData={gameData} onComplete={handleGameComplete} />
-          )}
-        </AgentStep>
-      </div>
-      <div className="bg-blue-100">
-        <StepProgressBar currentStep={currentStep} />
-      </div>
-      <div>
-        {/* Show Game Data Values for Debugging */}
-        {/* <div>
-          <h3 className="text-lg font-bold text-gray-800 mb-2">
-            Current Game Data (Debug):
-          </h3>
-          <pre className="bg-gray-100 p-4 rounded text-sm text-gray-700 overflow-x-auto">
-            {JSON.stringify(gameData, null, 2)}
-          </pre>
-        </div> */}
+    <div className="bg-blue-100 min-h-screen h-full">
+      <Sidebar />
+      <div className="ml-64 p-8 flex flex-col min-h-screen h-full max-w-7xl">
+        {/* <div className="max-w-6xl w-full flex flex-col h-screen justify-between"> */}
+        <div className="flex-1">
+          <AgentStep
+            stepNumber={currentStep}
+            title={currentAgent.title}
+            description={currentAgent.description}
+            onContinue={getStepHandler()}
+            canContinue={canContinue()}
+            buttonText={getButtonText()}
+          >
+            {currentStep === 1 && (
+              <IdeasAgent
+                selectedConcept={gameData.selectedConcept}
+                onConceptSelect={handleConceptSelect}
+              />
+            )}
+            {currentStep === 2 && (
+              <PlannerAgent
+                selectedConcept={gameData.selectedConcept}
+                selectedGameIdea={gameData.selectedGameIdea}
+                onGameIdeaSelect={handleGameIdeaSelect}
+              />
+            )}
+            {currentStep === 3 && (
+              <RequirementsAgent
+                selectedConcept={gameData.selectedConcept}
+                selectedGameIdea={gameData.selectedGameIdea}
+                questionAnswers={gameData.questionAnswers}
+                onAnswerUpdate={handleAnswerUpdate}
+                onQuestionsGenerated={handleQuestionsGenerated}
+                onNext={handleRequirementsNext}
+                canProceed={canContinue()}
+                currentQuestionIndex={requirementsQuestionIndex}
+              />
+            )}
+            {currentStep === 4 && (
+              <ProductManagerAgent
+                gameData={gameData}
+                onComplete={handlePRDComplete}
+              />
+            )}
+            {currentStep === 5 && (
+              <CodingAgent
+                gameData={gameData}
+                onComplete={handleGameComplete}
+              />
+            )}
+          </AgentStep>
+        </div>
+        <div className="bg-blue-100">
+          <StepProgressBar currentStep={currentStep} />
+        </div>
+        {/* </div> */}
       </div>
     </div>
   );

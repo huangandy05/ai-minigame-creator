@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     // Splash Screen
-    <div className="max-w-3xl mx-auto p-16 h-screen text-center gap-4 bg-pink-50 justify-center flex flex-col">
+    <div className="max-w-6xl mx-auto p-16 h-screen text-center gap-4 bg-pink-50 justify-center flex flex-col">
       {/* Header */}
       <h1 className="text-4xl font-bold mb-4 text-gray-800">
         AI Minigame Creator
